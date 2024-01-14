@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>New Ticket</title>
+
+    <!-- Include Roboto font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap">
+
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* Style for the navigation bar */
+        body {
+            margin: 0; /* Remove default margin */
+            font-family: 'Roboto', sans-serif; /* Use Roboto font */
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            display: flex; /* Use flexbox */
+            align-items: center; /* Center items vertically */
+            justify-content: space-between; /* Space items evenly */
+        }
+
+        /* Style for the navigation links */
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 10px;
+        }
+
+        /* Style for the container */
+        .container {
+            padding: 20px;
+        }
+        
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Style for centering the <h2> element */
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <h1>Ticket Tracker</h1>
+        <div>
+            <a th:href="@{'/tickets/list'}">Tickets</a>
+            <!-- Remove the line below -->
+            <!--<a href="@{'/new-tickets'}">New Tickets</a>-->
+        </div>
+    </nav>
+
+    <!-- Container with a Table -->
+    <div class="container">
+        <h2>Create New Ticket</h2>
+        <form th:action="@{'/tickets/create-ticket'}" th:object="${ticket}" method="post">
+            <!-- Ticket Title -->
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" th:field="*{title}" required>
+
+            <!-- Ticket Description -->
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" th:field="*{description}" required></textarea>
+
+            <!-- Submit Button -->
+            <button type="submit">Create Ticket</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Ticket List</title>
+
+<!-- Include Roboto font -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap">
+
+<!-- Include Font Awesome CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+/* Style for the navigation bar */
+body {
+	margin: 0; /* Remove default margin */
+	font-family: 'Roboto', sans-serif; /* Use Roboto font */
+}
+
+nav {
+	background-color: #333;
+	color: white;
+	padding: 10px;
+	text-align: center;
+	display: flex; /* Use flexbox */
+	align-items: center; /* Center items vertically */
+	justify-content: space-between; /* Space items evenly */
+}
+
+/* Style for the navigation links */
+nav a {
+	color: white;
+	text-decoration: none;
+	padding: 10px;
+	margin: 0 10px;
+}
+
+/* Style for the container */
+.container {
+	padding: 20px;
+}
+
+/* Style for the table */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+th, td {
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: left;
+}
+
+th {
+	background-color: #333;
+	color: white;
+}
+
+/* Style for the Action buttons */
+.action-buttons {
+	display: flex;
+	gap: 5px;
+}
+
+.action-buttons button {
+	padding: 8px 15px;
+	cursor: pointer;
+	border: none;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.3s ease;
+}
+
+/* Style for the buttons with Font Awesome icons */
+.edit-button {
+	background-color: #4CAF50;
+	color: white;
+}
+
+.delete-button {
+	background-color: #f44336;
+	color: white;
+}
+
+.view-button {
+	background-color: #2196F3;
+	color: white;
+}
+
+/* Style for the icons */
+.button-icon {
+	margin-right: 5px;
+}
+
+/* Style for the search box and button */
+.search-box {
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.search-input {
+	padding: 8px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	margin-right: 10px;
+}
+
+.search-button {
+	padding: 8px 15px;
+	background-color: #2196F3;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+/* Style for the title above the table */
+.table-title {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+
+	<!-- Navigation Bar -->
+	<nav>
+		<h1>Ticket Tracker</h1>
+		<div>
+			<a th:href="@{'/tickets/new-ticket'}">New Tickets</a> <a
+				th:href="@{'/tickets/list'}">Tickets</a>
+		</div>
+	</nav>
+
+	<!-- Container with a Title, Search Box, and Table -->
+	<div class="container">
+		<h2 class="table-title">Ticket List</h2>
+		<div class="search-box">
+			<form id="searchForm" th:action="@{'/tickets/searched-ticket'}" method="get">
+				<input type="text" id="searchInput" class="search-input"
+					name="search" placeholder="Search...">
+				<button type="submit" class="search-button">
+					<i class="fas fa-search"></i> Search
+				</button>
+			</form>
+
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Title</th>
+					<th>Description</th>
+					<th>Created On</th>
+					<th>Action</th>
+					<!-- New header for Action -->
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Add table rows with ticket information and action buttons -->
+				<tr th:each="ticket, rCount: ${tickets}">
+					<td th:text="${ticket.id}"></td>
+					<td th:text="${ticket.title}"></td>
+					<td th:text="${ticket.description}"></td>
+					<td th:text="${ticket.createOn}"></td>
+					<td class="action-buttons"><a
+						th:href="@{/tickets/edit-ticket/{id} (id=${ticket.id})}">
+							<button class="edit-button">
+								<span class="button-icon"><i class="fas fa-edit"></i></span>
+								Edit
+							</button>
+					</a> <a th:href="@{/tickets/delete-ticket/{id} (id=${ticket.id})}"
+						onclick="if (!(confirm('Are you sure you want to delete?'))) return false">
+							<button class="delete-button">
+								<span class="button-icon"><i class="fas fa-trash-alt"></i></span>
+								Delete
+							</button>
+					</a> <a th:href="@{/tickets/view-ticket/{id} (id=${ticket.id})}">
+							<button class="view-button">
+								<span class="button-icon"><i class="far fa-eye"></i></span> View
+							</button>
+					</a></td>
+				</tr>
+				<!-- Add more rows as needed -->
+			</tbody>
+		</table>
+	</div>
+
+	<!-- JavaScript for search functionality (dummy function for now) -->
+	<script>
+
+	</script>
+
+</body>
+
+</html>
